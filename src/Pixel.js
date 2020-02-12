@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import { gql } from "apollo-boost";
 import { useMutation } from "@apollo/react-hooks";
 
@@ -16,15 +17,21 @@ const UPDATE_COLOR = gql`
 `;
 
 const Pixel = ({ id, color, newColor }) => {
+  const [pixelColor, changeColor] = useState(color);
   const [updatePixelColor] = useMutation(UPDATE_COLOR);
 
+  useEffect(() => {
+    changeColor(color);
+  }, [color]);
+  
   return (
     <span
       className="pixel"
       onClick={() => {
+        changeColor(newColor);
         updatePixelColor({ variables: { id, color: newColor } });
       }}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: pixelColor }}
     ></span>
   );
 };

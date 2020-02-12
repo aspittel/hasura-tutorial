@@ -50,7 +50,7 @@ body {
   content: " ";
   width: 16px;
   height: 16px;
-  outline: 1px solid white;
+  outline: 1px solid lightgrey;
   background-color: #e0e0e0;
   cursor: pointer;
 }
