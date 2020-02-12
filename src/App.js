@@ -1,27 +1,11 @@
 import React, { useState } from "react";
-import { useSubscription } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import Pixel from "./Pixel";
 import ColorPicker from "./ColorPicker";
 
-const GET_PIXELS = gql`
-  subscription GetPixels {
-    pixels(order_by: { id: asc }) {
-      color
-      id
-      x
-      y
-    }
-  }
-`;
+const pixels = new Array(400).fill("white");
 
 function App() {
-  const { loading, error, data } = useSubscription(GET_PIXELS);
   const [color, changeColor] = useState("white");
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <div className="content">
@@ -30,8 +14,8 @@ function App() {
       <ColorPicker changeColor={changeColor} />
       <p>Click a Pixel</p>
       <div className="container">
-        {data.pixels.map(pixel => (
-          <Pixel {...pixel} key={pixel.id} newColor={color} />
+        {pixels.map((pixel, idx) => (
+          <Pixel color={pixel} key={idx} newColor={color} />
         ))}
       </div>
     </div>
